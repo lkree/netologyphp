@@ -5,7 +5,30 @@ $myName = 'Leonid';
 $myEmail = 'xtendmix@gmail.com';
 $myCity = 'Yaroslavl';
 $aboutMySelf = 'something about myself i have to write in this row.';
+
+
+if (isset($_GET['x'])) {
+    $usersNumber = intval($_GET['x']);
+    $variableA = 1;
+    $variableB = 1;
+    do {
+    if ($usersNumber > $variableA) {
+        $variableC = $variableA;
+        $variableA += $variableB;
+        $variableB = $variableC;
+    }
+    } while ($variableA < $usersNumber);
+
+    if ($usersNumber < $variableA) {
+        echo 'задуманное число НЕ входит в числовой ряд';
+    } else {
+        echo 'задуманное число входит в числовой ряд';
+    }
+}
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,30 +45,3 @@ $aboutMySelf = 'something about myself i have to write in this row.';
     <p>Что-то обо мне: <?=$aboutMySelf;?></p>
 </body>
 </html>
-
-
-<?php
-$usersNumber = $_GET['x'];
-if (isset($usersNumber)) {
-    $usersNumber = intval($usersNumber);
-    $variableA = 1;
-    $variableB = 1;
-    do {
-    if ($usersNumber >= $variableA) {
-        if (!($usersNumber === $variableA)) {
-            $variableC = $variableA;
-            $variableA += $variableB;
-            $variableB = $variableC;
-        } else {
-            echo 'задуманное число входит в числовой ряд';
-            die;
-        }
-    } else {
-        echo 'задуманное число НЕ входит в числовой ряд';
-        die;
-    }
-} while ($variableA <= $usersNumber);
-}
-if ($usersNumber < $variableA) {
-    echo 'задуманное число НЕ входит в числовой ряд';
-}
