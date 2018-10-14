@@ -8,20 +8,10 @@
         'South America' => ['Eunectes mirunus']
     ];
 
-    $animalsFirstNamesInCountries = [
-        'Africa' => ['Giraffa', 'Loxodonta'],
-        'Antarctica' => ['Aptenodytes'],
-        'Australia' => ['Macropus'],
-        'Eurasia' => ['Pterimys', 'Bison', 'Apodemus'],
-        'North America' => ['Mammuthus', 'Stereoson'],
-        'South America' => ['Eunectes']
-    ];
-    
-
     $twoWordsAnimals = [];
     foreach ($animalsInCountries as $k => $v) {
         foreach ($v as $key => $value) {
-            if (strpos($value, ' ')) {
+            if (str_word_count($value, 0) == 2) {
                 $twoWordsAnimals[] = $value;
             }
         }
@@ -32,8 +22,10 @@
     $finalNamesAnimals = [];
 
     foreach ($twoWordsAnimals as $k => $v) {
-        $animalsFirstname[] = array_pop(explode(' ', $v, -1));
-        $animalsSurname[] = array_pop(explode(' ', $v, 2));
+        $tempNameAnimal = explode(' ', $v, -1);
+        $tempSurnameAnimal = explode(' ', $v, 2);
+        $animalsFirstname[] = array_pop($tempNameAnimal);
+        $animalsSurname[] = array_pop($tempSurnameAnimal);
     }
 
     shuffle($animalsFirstname);
@@ -47,13 +39,7 @@
 
         $finalNamesAnimals[] = $tempFirstName .' '. $tempSecondName;
     }
-
-    foreach($finalNamesAnimals as $k => $v) {
-        $tempName[] = array_pop(explode(' ', $v, -1));
-    }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,14 +49,8 @@
     <title>Document</title>
 </head>
 <body>
-<?php
-for ($i = 0; $i < count($tempName); $i++) {
-    foreach($animalsFirstNamesInCountries as $k => $v) {
-        foreach($v as $key => $value) {
-            if ($tempName[$i] == $value) { ?>
-    <h2><?=$k?></h2>
-    <p><?=$finalNamesAnimals[$i]?></p>  
-<?php } } } } ?>
+<?php foreach ($finalNamesAnimals as $k => $v):?>
+<p><?=$v?></p>
+<?php endforeach; ?>
 </body>
 </html>
-
