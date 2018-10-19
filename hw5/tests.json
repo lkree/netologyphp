@@ -1,0 +1,22 @@
+{
+    "testFirst": 
+    {
+    "startTest": "test1",
+    "trueResult": "3"
+    },
+    "testSecond": 
+    {
+    "startTest": "test2",
+    "trueResult": "3"
+    },
+    "testThird": 
+    {
+    "startTest": "test3",
+    "trueResult": "2"
+    },
+    "testFourth": 
+    {
+    "startTest": "test4",
+    "trueResult": "3"
+    }
+}
