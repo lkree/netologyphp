@@ -1,6 +1,6 @@
 <?php
     function booksApi ($argv) {
-        error_reporting(4); // почему-то ругается на часть массива полученного из гугла (якобы 2 пустых)
+        error_reporting(-1); // почему-то ругается на часть массива полученного из гугла (якобы 2 пустых)
         if (isset($argv[1])) { // проверяем на наличие параметров
             array_shift($argv);
             $stringBookName = '';
@@ -15,15 +15,17 @@
                     foreach ($jsonBook as $k => $v) { // разбираем массив на части
                         if ($jsonBook['totalItems'] == 0) { // если книга не найдена
                             echo 'К сожалению такая книга не найдена :(';
-                            break;
+                            die();
                         } else {
                             fopen('booksAndAuthors.csv', 'w'); // создаем файл для записи и/или открываем его
                             foreach ($v as $key => $value) {
-                                $bookNameAndAuthor = [array_shift($value['volumeInfo']['authors']), $value['volumeInfo']['title']]; // формируем название книги
-                                $openedCsv = fopen('booksAndAuthors.csv', 'a');
-                                fputcsv($openedCsv, $bookNameAndAuthor); //записываем в файл поочередно все названия
-                                fclose($openedCsv);
-                            } 
+                                if (!empty($value['volumeInfo']['authors'])) {
+                                    $bookNameAndAuthor = [array_shift($value['volumeInfo']['authors']), $value['volumeInfo']['title']]; // формируем название книги
+                                    $openedCsv = fopen('booksAndAuthors.csv', 'a');
+                                    fputcsv($openedCsv, $bookNameAndAuthor); //записываем в файл поочередно все названия
+                                    fclose($openedCsv);
+                                }
+                            }
                         }
                     } echo 'Книги успешно записаны!';
                 } else echo 'Были обнаружены ошибки при работе с удаленным json файлом';
