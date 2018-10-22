@@ -1,57 +1,50 @@
-<?php 
-function test1() {?>
-<form action="" method="GET">
-    <fieldset>
-      <legend>Сколько граммов в одном килограмме?</legend>
-        <label><input type="radio" name="test1" value="1"> 10</label>
-        <label><input type="radio" name="test1" value="2"> 100</label>
-        <label><input type="radio" name="test1" value="3"> 1000</label>
-        <label><input type="radio" name="test1" value="4"> 10000</label>
-    </fieldset>
-    <input type="submit" value="done" name="result"> 
-</form>
-<?php }?>
+<?php
+    $testsList = [];
 
-<?php function test2() {?>
-<form action="" method="GET">
-    <fieldset>
-      <legend>Сколько метров в одном дециметре?</legend>
-        <label><input type="radio" name="test2" value="1"> 100</label>
-        <label><input type="radio" name="test2" value="2"> 10</label>
-        <label><input type="radio" name="test2" value="3"> 0.1</label>
-        <label><input type="radio" name="test2" value="4"> 0.01</label>
-    </fieldset>
-    <input type="submit" value="done" name="result">  
-</form>
-<?php }?>
+    foreach (glob('tests/*.json') as $json) {
+        $testsList[] = $json;
+    }
+?>
 
-<?php 
-function test3() {?>
-<form action="" method="GET">
-    <fieldset>
-      <legend>Сколько бит в байте?</legend>
-        <label><input type="radio" name="test3" value="1">4</label>
-        <label><input type="radio" name="test3" value="2">8</label>
-        <label><input type="radio" name="test3" value="3">16</label>
-        <label><input type="radio" name="test3" value="4">32</label>
-    </fieldset>
-    <input type="submit" value="done" name="result"> 
-</form>
-<?php }?>
 
-<?php function test4() {?>
-<form action="" method="GET">
-    <fieldset>
-      <legend>Сколько байт в килобайте?</legend>
-        <label><input type="radio" name="test4" value="1">~10</label>
-        <label><input type="radio" name="test4" value="2">~100</label>
-        <label><input type="radio" name="test4" value="3">~1000</label>
-        <label><input type="radio" name="test4" value="4">~10000</label>
-    </fieldset>
-    <input type="submit" value="done" name="result">  
-</form>
-<?php }?>
 
-<?php function tryOneMoreTime() {?>
-<a href="<?php echo 'test.php' ?>">Try one more time</a>
-<?php } ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .choose-test {
+            margin: 40vmin auto;
+            text-align: center;
+            vertical-align: top;
+        }
+        .choose-test--btn {
+            box-sizing: border-box;
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            border: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            padding-top: 5px;
+        }
+        .choose-test--btn:hover {
+            background-color: red;
+            color: #fff;
+            transition: all 0.5s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="choose-test">
+        <?php
+        foreach ($testsList as $k => $v):
+            $link = substr($v, 0, -5); ?>
+        <a class="choose-test--btn" href="test.php?test=<?php echo $link ?>"><?php echo $k ?></a>
+        <?php endforeach; ?>
+    </div>
+</body>
+</html>
