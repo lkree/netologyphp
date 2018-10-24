@@ -17,14 +17,14 @@
     <title>Document</title>
     <style>
         .choose-test {
-            margin: 40vmin auto;
+            margin: 40vmin auto 0;
             text-align: center;
             vertical-align: top;
         }
         .choose-test--btn {
             box-sizing: border-box;
             display: inline-block;
-            width: 80px;
+            width: 100px;
             height: 30px;
             border: 1px solid #000;
             text-decoration: none;
@@ -36,6 +36,13 @@
             color: #fff;
             transition: all 0.5s linear;
         }
+        .another-test {
+            width: 120px;
+            height: 50px;
+            text-align: center;
+            margin: 2vmin auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -43,8 +50,9 @@
         <?php
         foreach ($testsList as $k => $v):
             $link = substr($v, 0, -5); ?>
-        <a class="choose-test--btn" href="test.php?test=<?php echo $link ?>"><?php echo $k ?></a>
+        <a class="choose-test--btn" href="test.php?test=<?php echo $link ?>">Тест №<?php echo $k +1 ?></a>
         <?php endforeach; ?>
     </div>
+    <a class ="choose-test--btn another-test" href="admin.php">Загрузить еще один тест?</a>
 </body>
 </html>

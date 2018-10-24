@@ -2,13 +2,12 @@
     if (empty($_GET)) { ?>
     <a href="list.php">Try some test</a>
     <?php die(); 
-    } else {?>
+    } else { ?>
 
 <?php
     if (!empty($_GET['test'])) {
-    $json = file_get_contents(__DIR__ .'\\'. $_GET['test']. '.json');
+    $json = file_get_contents(__DIR__ .DIRECTORY_SEPARATOR. $_GET['test']. '.json');
     $json = json_decode($json, true);
-    $i = 0;
     }
 
     function tryOneMoreTime() {?>
@@ -33,11 +32,12 @@
 <form action="" method="POST">
     <?php if (empty($_POST['result'])) : ?>
     <fieldset>
-      <legend><?php echo $json['question'][0] ?></legend>
+        <?php foreach ($json as $k => $v) : ?>
+      <legend><?php echo $json[$k]['question'][0] ?></legend>
       <?php
-      foreach ($json['answers'] as $v) : ?>
-        <label><input type="radio" name="answer" value="<?php echo $i ?>"> <?php echo $json['answers'][$i] ?></label>
-    <?php $i++; endforeach; ?>
+      foreach ($json[$k]['answers'] as $key => $value) : ?>
+        <label><input type="radio" name="<?php echo $k ?>" value="<?php echo $value ?>"> <?php echo $value ?></label>
+    <?php endforeach;  endforeach; ?>
     </fieldset>
     <input type="submit" value="done" name="result">
     <?php endif; ?>
@@ -45,21 +45,22 @@
 
 
     <?php
-        if (!empty($_POST['result']) && !empty($_POST['answer'])) {
-            if ($_POST['answer'] == $json['trueAnswer'][0]) {
+    if (count($_POST) == 1) {
+        echo '<h1>'.'Please, answer at least one question'.'</h1>';
+        tryOneMoreTime();
+    } else
+    foreach ($json as $k => $v) {
+        if (!empty($_POST['result']) && !empty($_POST[$k])) {
+            if ($_POST[$k] == $json[$k]['trueAnswer'][0]) {
                 echo '<h1>'.'You win'.'</h1>';
                 tryOneMoreTime();
+            
             } else {
                 echo '<h1>'.'You lose'.'</h1>';
                 tryOneMoreTime();
             }
-        } elseif (isset($_POST['result']) && $_POST['answer'] == 0) {
-            echo '<h1>'.'You lose'.'</h1>';
-            tryOneMoreTime();
-
-        } elseif (isset($_POST['result']) && empty($_POST['answer'])) {
-            tryOneMoreTime();
-    }
+        }
+    } 
 }?>
 </body>
 </html>

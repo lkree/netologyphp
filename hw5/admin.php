@@ -5,7 +5,7 @@ function goingBackUrl() { ?>
 <?php }
 function goingToTests() { ?>
     <br>
-    <a href="list.php">Попробавать пройти тест</a>
+    <a href="list.php">Попробовать пройти тест</a>
 <?php } ?>
 
 
