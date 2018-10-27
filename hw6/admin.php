@@ -1,31 +1,28 @@
 <?php
-function goingBackUrl() { ?>
-    <br>
-    <a href="admin.php">Вернуться назад</a>
-<?php }
-function goingToTests() { ?>
-    <br>
-    <a href="list.php">Попробовать пройти тест</a>
-<?php }
+    include_once('functions.php');
 
-if (!empty($_POST['result'])) {
-    $fileName = substr($_FILES['json']['name'], -4);
-    if ($fileName === 'json') {
-    $uploadDir = __DIR__.'\tests\\';
-    $uploadFile = $uploadDir . basename($_FILES['json']['name']);
+    if (!empty($_POST['result'])) {
+        $fileName = substr($_FILES['json']['name'], -4);
 
-    if (move_uploaded_file($_FILES['json']['tmp_name'], $uploadFile)) {
+        if ($fileName === 'json') {
+            $uploadDir = __DIR__.'\tests\\';
+            $uploadFile = $uploadDir . basename($_FILES['json']['name']);
+
+        if (move_uploaded_file($_FILES['json']['tmp_name'], $uploadFile)) {
         header("Location: list.php");
-    } else {
+
+        } else {
         http_response_code(404);
         echo 'Что-то пошло не так';
         goingBackUrl();
-    }
-    } else {
+        }
+
+        } else {
         echo 'Загрузите, пожалуйста, файл типа *.json';
         goingBackUrl();
-    } 
-} else {
+        } 
+
+    } else {
 ?>
 <!DOCTYPE html>
 <html lang="en">

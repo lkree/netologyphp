@@ -1,16 +1,20 @@
 <?php
+    include_once('functions.php');
+
     if (empty($_GET)) { ?>
     <a href="list.php">Try some test</a>
     <?php die(); 
+
     } elseif (!(@file_get_contents(__DIR__ .DIRECTORY_SEPARATOR.
      $_GET['test']. '.json'))) {
         http_response_code(404);
         die('Что-то пошло не так'.'<br>'.
         '<a href="list.php">Try another test</a>');
-    }
-    elseif (empty($_POST)) {
+        
+    } elseif (empty($_POST)) {
         include_once('functions.php');
         formName();
+        exit;
     } else {
 
     if(!empty($_POST['usersName'])) {
@@ -24,13 +28,33 @@
         $json = json_decode($json, true);
     }
 
-    function tryOneMoreTime() {?>
-    <br>
-    <a href="test.php?test=<?php echo $_GET['test'] ?>">Try one more time</a>
-    <br>
-    <a href="list.php">Try another test</a>
-    <?php }
-?>
+    if (count($_POST) == 1 && empty($_POST['usersName'])) {
+        echo '<h1>'.'Please, answer at least one question'.'</h1>';
+        tryOneMoreTime();
+    } else
+
+    foreach ($json as $k => $v) {
+        if (!empty($_POST['result']) && !empty($_POST[$k])) {
+
+            if ($_POST[$k] == $json[$k]['trueAnswer'][0]) {
+                $anotherFile = fopen('grade.txt', 'r+');
+                file_put_contents('grade.txt', 5);
+                fclose($anotherFile);
+
+                echo '<h1>'.'You win'.'</h1>'. '<img src="generateImage.php">';
+                tryOneMoreTime();
+            
+            } else {
+                $anotherFile = fopen('grade.txt', 'r+');
+                file_put_contents('grade.txt', 2);
+                fclose($anotherFile);
+
+                echo '<h1>'.'You lose'.'</h1>'. '<img src="generateImage.php">';
+                tryOneMoreTime();
+            }
+        }
+    } 
+}?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,31 +78,5 @@
     <input type="submit" value="done" name="result">
     <?php endif; ?>
 </form>
-
-
-    <?php
-    if (count($_POST) == 1 && empty($_POST['usersName'])) {
-        echo '<h1>'.'Please, answer at least one question'.'</h1>';
-        tryOneMoreTime();
-    } else
-    foreach ($json as $k => $v) {
-        if (!empty($_POST['result']) && !empty($_POST[$k])) {
-            if ($_POST[$k] == $json[$k]['trueAnswer'][0]) {
-                $anotherFile = fopen('grade.txt', 'r+');
-                file_put_contents('grade.txt', 5);
-                fclose($anotherFile);
-                echo '<h1>'.'You win'.'</h1>'. '<img src="generateImage.php">';
-                tryOneMoreTime();
-            
-            } else {
-                $anotherFile = fopen('grade.txt', 'r+');
-                file_put_contents('grade.txt', 2);
-                fclose($anotherFile);
-                echo '<h1>'.'You lose'.'</h1>'. '<img src="generateImage.php">';
-                tryOneMoreTime();
-            }
-        }
-    } 
-}?>
 </body>
 </html>
