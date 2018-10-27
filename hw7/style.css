@@ -1,0 +1,52 @@
+.choose-test {
+    margin: 40vmin auto 0;
+    text-align: center;
+    vertical-align: top;
+}
+
+.choose-test--btn {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #000;
+    text-decoration: none;
+    color: #000;
+    padding-top: 5px;
+}
+
+.choose-test--btn:hover {
+    background-color: red;
+    color: #fff;
+    transition: all 0.5s linear;
+}
+
+.another-test {
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    margin: 2vmin auto;
+    display: block;
+}
+
+.delete-test {
+    margin: 1vmin auto;
+    text-align: center;
+    vertical-align: top;
+}
+
+.delete-test--btn {
+    display: inline-block;
+    border-radius: 50px;
+    width: 140px;
+    height: 25px;
+}
+
+.delete-test--btn:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    transition: all 1s ease;
+    width: 180px;
+    height: 30px;
+}
