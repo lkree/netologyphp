@@ -37,22 +37,51 @@
         }
     }
 
-    function loginEncoder($newLogin, $newPassword, $newRole = 'guest') {
-        if (!@file_get_contents(__DIR__. '/users/login.json')) {
-            die('something goes wrong');
+    // function loginEncoder($newLogin, $newPassword, $newRole = 'guest') {
+    //     if (!@file_get_contents(__DIR__. '/users/login.json')) {
+    //         die('something goes wrong');
 
-        } else {
-            $loginJson = file_get_contents(__DIR__. '/users/login.json');
-            $loginJson = json_decode($loginJson, true);
+    //     } else {
+    //         $loginJson = file_get_contents(__DIR__. '/users/login.json');
+    //         $loginJson = json_decode($loginJson, true);
 
-            $loginJson[$newLogin] = [$newLogin => [
-                'login' => $newLogin,
-                'password' => $newPassword,
-                'role' => $newRole
-            ]];
+    //         $loginJson[$newLogin] = [$newLogin => [
+    //             'login' => $newLogin,
+    //             'password' => $newPassword,
+    //             'role' => $newRole
+    //         ]];
 
-            $loginJson = json_encode($loginJson);
+    //         $loginJson = json_encode($loginJson);
 
-            file_put_contents(__DIR__. '/users/login.json', $loginJson);
+    //         file_put_contents(__DIR__. '/users/login.json', $loginJson);
+    //     }
+    // }
+
+    function getPermission() {
+        if (empty($_SESSION['permissions'])) {
+            http_response_code(403);
+            exit('403 Forbidden');
         }
     }
+
+    function getAuthorization() { ?>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <link rel="stylesheet" href="style.css">
+            <title>Document</title>
+        </head>
+        <body>
+            <form action="" method="POST">
+                <label for="login">Введите логин</label>
+                    <input type="text" name="login" id="login">
+                <label for="password">Введите пароль</label>
+                    <input type="password" name="password" id="password">
+                <input type="submit" name="submit">
+            </form>
+        </body>
+        </html>
+    <?php }

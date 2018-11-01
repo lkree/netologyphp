@@ -1,5 +1,8 @@
 <?php
+    session_start();
     include_once('functions.php');
+
+    getPermission();
 
     if (!empty($_POST['result'])) {
         $fileName = substr($_FILES['json']['name'], -4);

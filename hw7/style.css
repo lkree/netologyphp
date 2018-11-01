@@ -50,3 +50,7 @@
     width: 180px;
     height: 30px;
 }
+label, input[type='submit'] {
+    display: block;
+    margin: 5px;
+}

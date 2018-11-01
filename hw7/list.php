@@ -1,18 +1,18 @@
 <?php
+session_start();
     $testsList = [];
     include_once('functions.php');
 
-    if (!isset($_SERVER['PHP_AUTH_USER'])) {
-        http_response_code(403);
-    } else {
-        if (!empty($_POST)) {
-            foreach($_POST as $k => $v) {
-                unlink($k.'.json');
-            }
-        }
+    getPermission();
 
-        foreach (glob('tests/*.json') as $json) {
-            $testsList[] = $json;
+    if (!empty($_POST)) {
+        foreach($_POST as $k => $v) {
+            unlink($k.'.json');
+        }
+    }
+
+    foreach (glob('tests/*.json') as $json) {
+        $testsList[] = $json;
     }
 ?>
 
@@ -36,8 +36,7 @@
         <?php endforeach; ?>
     </div>
     <?php
-        if ($_SERVER['PHP_AUTH_USER'] === loginDecoder()['admin']['login'] 
-        && $_SERVER['PHP_AUTH_PW'] === loginDecoder()['admin']['password']) : ?>
+        if ($_SESSION['permissions'] === 'admin') : ?>
     <a class ="choose-test--btn another-test" href="admin.php">Загрузить еще один тест?</a>
         <?php foreach ($testsList as $k => $v):
                 $v = substr($v, 0, -5); ?>
@@ -47,5 +46,3 @@
         <?php endforeach; endif; ?>
 </body>
 </html>
-
-    <?php }

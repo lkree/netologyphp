@@ -1,5 +1,8 @@
 <?php
+    session_start();
     include_once('functions.php');
+
+    getPermission();
 
     if (empty($_GET)) { ?>
     <a href="list.php">Try some test</a>
