@@ -1,11 +1,8 @@
 <?php
+    session_start();
     include_once('functions.php');
 
-    foreach(loginDecoder() as $k => $v) {
-        if ($k === $_SERVER['PHP_AUTH_USER']) {
-            $usersName = $k;
-        }
-    }
+    $usersName = $_SESSION['name'];
 
     $fileWithGrade = file_get_contents('grade.txt');
 

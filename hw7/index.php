@@ -4,6 +4,7 @@
 
     if (!empty($_POST['relogin'])) {
         $_SESSION = [];
+        session_destroy();
         header('Location: index.php');
     }
 
@@ -13,6 +14,7 @@
 
     if (!empty($_POST['login']) && empty($_POST['password'])) {
         $_SESSION['permissions'] = 'guest';
+        $_SESSION['name'] = $_POST['login'];
         header('Location: list.php');
     }
 
@@ -20,15 +22,13 @@
         if ($_POST['login'] === loginDecoder()['admin']['login'] 
         && $_POST['password'] === loginDecoder()['admin']['password']) {
             $_SESSION['permissions'] = 'admin';
+            $_SESSION['name'] = $_POST['login'];
             header('Location: list.php');
         } else {
-            $_SESSION = [];
-            echo 'Вы ввели несуществующий логин пароль.'.'<br>'.
-            'Для доступа как гость, введите только логин.'.'<br>'.
-            'Для доступа как админ, введите логин и пароль администратора.';
+            permissionDenied();
         }
     }
 
     if (!empty($_SESSION['permissions'])) {
-    disconnect();
+        disconnect();
     }

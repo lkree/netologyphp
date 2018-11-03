@@ -46,7 +46,7 @@
     cursor: pointer;
     background-color: black;
     color: white;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
     width: 180px;
     height: 30px;
 }
