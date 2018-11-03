@@ -4,11 +4,10 @@
 
     if (!empty($_POST['relogin'])) {
         $_SESSION = [];
-        session_destroy();
-        header('Location: /');
+        header('Location: index.php');
     }
 
-    if (empty($_POST['login']) && empty($_POST['password'])) {
+    if (empty($_POST['login']) && empty($_POST['password']) && empty($_SESSION['permissions'])) {
         getAuthorization();
     }
 
@@ -28,4 +27,8 @@
             'Для доступа как гость, введите только логин.'.'<br>'.
             'Для доступа как админ, введите логин и пароль администратора.';
         }
+    }
+
+    if (!empty($_SESSION['permissions'])) {
+    disconnect();
     }

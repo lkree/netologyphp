@@ -85,3 +85,12 @@
         </body>
         </html>
     <?php }
+
+    function disconnect() { ?>
+        <link rel="stylesheet" href="style.css">
+            <form action="" method="post">
+                <label for="relogin">Хотите зайти под другой учетной записью?</label>
+                    <input type="submit" value="Выйти" name="relogin">
+            </form>
+    <?php exit();
+    }
