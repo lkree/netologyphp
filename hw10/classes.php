@@ -200,9 +200,9 @@ class Todo
             <form action="" method="post" id="<?php echo $v['id'] ?>">
                 <select name="userAssignedId" id="" form="<?php echo $v['id'] ?>">
                     <?php foreach ($this->db()->query("SELECT * FROM user") as $key => $value) :
-                        if ($value['id'] != $v['user_id']): ?>
+                        if ($value['id'] != $this->userId): ?>
                         <option value="<?php echo $value['id'] ?>"><?php echo $value['login'] ?></option>
-                    <? endif; endforeach; ?>
+                    <?php endif; endforeach; ?>
                     <input type="hidden" name="affairId" value="<?php echo $v['id'] ?>">
                     <input type="submit" Value="Передать">
                 </select>
@@ -245,7 +245,7 @@ class Todo
     {
         $this->userId = $_SESSION['id'];
 
-        if (!empty($_POST['affairs']) || !empty($_POST['deleteId']) || !empty($_POST['updateId']) || $_POST['userAssignedId']) {
+        if (!empty($_POST['affairs']) || !empty($_POST['deleteId']) || !empty($_POST['updateId']) || !empty($_POST['userAssignedId'])) {
             $this->affairs();
             exit();
         } elseif (!empty($_POST['addAffair']) || !empty($_POST['newAffairAdded'])) {
